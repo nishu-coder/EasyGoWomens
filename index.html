@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyGo - Empowering Workers</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-blue-600 p-4">
+        <div class="container mx-auto">
+            <h1 class="text-white text-2xl font-bold">EasyGo</h1>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="container mx-auto mt-8 px-4">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-semibold mb-4">Register as Worker/Employer</h2>
+            
+            <!-- Worker Form -->
+            <form id="workerForm" class="space-y-4">
+                <input type="text" placeholder="Name" class="w-full p-2 border rounded" required>
+                <input type="tel" placeholder="Phone" class="w-full p-2 border rounded" required>
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Register as Worker
+                </button>
+            </form>
+
+            <hr class="my-6">
+
+            <!-- Employer Form -->
+            <form id="employerForm" class="space-y-4">
+                <input type="text" placeholder="Employer Name" class="w-full p-2 border rounded" required>
+                <input type="tel" placeholder="Contact" class="w-full p-2 border rounded" required>
+                <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                    Register as Employer
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        // Form submission logic (to be added later)
+    </script>
+</body>
+</html>
