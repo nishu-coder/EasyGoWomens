@@ -43,7 +43,34 @@
     </section>
 
     <script>
-        // Form submission logic (to be added later)
-    </script>
+        // Worker Form
+        document.getElementById('workerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            submitForm('worker');
+        });
+        
+        // Employer Form
+        document.getElementById('employerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            submitForm('employer');
+        });
+        
+        function submitForm(type) {
+            const form = type === 'worker' ? 
+                document.getElementById('workerForm') : 
+                document.getElementById('employerForm');
+            
+            const name = form.querySelector('input[type="text"]').value;
+            const phone = form.querySelector('input[type="tel"]').value;
+        
+            fetch('https://script.google.com/macros/s/AKfycbxABILD7knjc39-baiZ0T4f5SDAX7UFu3V8lfvxX0ahf27M6598oOij8XfX8ogXoWcn/exec', {
+                method: 'POST',
+                body: JSON.stringify({ name, phone, type }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(() => alert('Registration Successful!'))
+            .catch(() => alert('Error!'));
+        }
+        </script>
 </body>
 </html>
