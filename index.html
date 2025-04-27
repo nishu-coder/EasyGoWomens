@@ -22,8 +22,8 @@
             
             <!-- Worker Form -->
             <form id="workerForm" class="space-y-4">
-                <input type="text" placeholder="Name" class="w-full p-2 border rounded" required>
-                <input type="tel" placeholder="Phone" class="w-full p-2 border rounded" required>
+                <input type="text" placeholder="Full Name" class="w-full p-2 border rounded" required>
+                <input type="tel" placeholder="Phone Number" class="w-full p-2 border rounded" required>
                 <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                     Register as Worker
                 </button>
@@ -34,7 +34,7 @@
             <!-- Employer Form -->
             <form id="employerForm" class="space-y-4">
                 <input type="text" placeholder="Employer Name" class="w-full p-2 border rounded" required>
-                <input type="tel" placeholder="Contact" class="w-full p-2 border rounded" required>
+                <input type="tel" placeholder="Contact Number" class="w-full p-2 border rounded" required>
                 <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
                     Register as Employer
                 </button>
@@ -43,34 +43,58 @@
     </section>
 
     <script>
-        // Worker Form
-        document.getElementById('workerForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            submitForm('worker');
+        // Wait for DOM to load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Worker Form
+            document.getElementById('workerForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                submitForm('worker');
+            });
+
+            // Employer Form
+            document.getElementById('employerForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                submitForm('employer');
+            });
+
+            function submitForm(type) {
+                const form = document.getElementById(type + 'Form');
+                const inputs = form.querySelectorAll('input');
+                
+                // Basic validation
+                if (!inputs[0].value || !inputs[1].value) {
+                    alert('Please fill all fields');
+                    return;
+                }
+
+                const formData = {
+                    name: inputs[0].value,
+                    phone: inputs[1].value,
+                    type: type
+                };
+
+                // Replace with your Google Script URL
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbxABILD7knjc39-baiZ0T4f5SDAX7UFu3V8lfvxX0ahf27M6598oOij8XfX8ogXoWcn/exec';
+
+                fetch(scriptURL, {
+                    method: 'POST',
+                    body: JSON.stringify(formData),
+                    headers: { 'Content-Type': 'application/json' }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Registration Successful!');
+                        form.reset();
+                    } else {
+                        throw new Error('Network response was not ok');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Registration Failed. Please try again.');
+                });
+            }
         });
-        
-        // Employer Form
-        document.getElementById('employerForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            submitForm('employer');
-        });
-        
-        function submitForm(type) {
-            const form = type === 'worker' ? 
-                document.getElementById('workerForm') : 
-                document.getElementById('employerForm');
-            
-            const name = form.querySelector('input[type="text"]').value;
-            const phone = form.querySelector('input[type="tel"]').value;
-        
-            fetch('https://script.google.com/macros/s/AKfycbxABILD7knjc39-baiZ0T4f5SDAX7UFu3V8lfvxX0ahf27M6598oOij8XfX8ogXoWcn/exec', {
-                method: 'POST',
-                body: JSON.stringify({ name, phone, type }),
-                headers: { 'Content-Type': 'application/json' }
-            })
-            .then(() => alert('Registration Successful!'))
-            .catch(() => alert('Error!'));
-        }
-        </script>
+    </script>
 </body>
 </html>
